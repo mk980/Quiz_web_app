@@ -1,10 +1,50 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet">
+    {% block extra_head %}
+    {% endblock %}
+    <title>{% block title %}{% endblock %}</title>
 </head>
-<body>
 
+<body class="bg-gray-100">
+    <!-- Header -->
+    <header class="header">
+        <nav class="bg-black p-3 flex justify-between items-center">
+            <a class="navbar-brand text-white font-bold text-xl" href="{% url 'home' %}">
+                <img src="{% static 'img/smiley.png' %}" alt="TRIVIA" width="40" height="40"
+                    class="d-inline-block align-text-top me-2" />
+                TRIVIA
+            </a>
+            <ul class="flex gap-4">
+                {% if user.is_authenticated %}
+                <li><a class="text-white hover:text-blue-300" href="{% url 'game_screen %}">Play Game</a></li>
+                <li><a class="text-white hover:text-blue-300" href="{% url 'logout' %}">Logout</a></li>
+                {% else %}
+                <li><a class="text-white hover:text-blue-300" href="{% url 'login' %}">Login</a></li>
+                <li><a class="text-white hover:text-blue-300" href="{% url 'register' %}">Register</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Body -->
+    <main class="container mx-auto px-4">
+    {% block content %}
+    {% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-black text-center p-4 mt-8 text-white">
+        <p>© TRIVIA_Quiz</p>
+    </footer>
+
+    {% block extra_scripts %}
+    {% endblock %}
 </body>
+
 </html>

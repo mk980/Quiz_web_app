@@ -1,10 +1,51 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "base.html" %}
+{% load static %}
 
+{% block content %}
+ <main>
+     <h1> Select Category</h1>
+        <label for="category"></label><select id="category">
+        <option value="">Select a category</option>
+        {% for category in categories %}
+            <option value="{{ category}}">{{ category}}</option>
+            {% endfor %}
+    </select>
+{% endblock content %}
+</main>
+
+<body>
+<form id="startGameForm" method="GET" action="{% url 'game_view' %}">
+    {% csrf_token %}
+    <button type="submit"><h2>Start the game!</h2></button>
+    <br>
+     <script>
+    $(document).ready(function () {
+
+        $('#startGameForm').submit(function (event) {
+            event.preventDefault();  // Prevent default form submission
+
+            // Use AJAX to submit the form and handle the response
+            $.ajax({
+            type: 'GET',
+            url: $(this).attr('action'),
+            data: $(this).serialize(),
+            success: function (data) {
+                console.log('Success:', data);
+                // Add additional logic if needed
+            },
+            error: function (xhr, status, error) {
+                console.error('Error:', error);
+                alert('Failed to start the game');
+            },
+            complete: function () {
+                // Redirect after the request is complete
+                window.location.href = '/game_screen/';
+            }
+        });
+    });
+});
+</script>
+</form>
 </body>
-</html>
+
+{% endblock %}
