@@ -5,10 +5,9 @@ class User(models.Model):
 	user_first_name = models.CharField(max_length=100, null=False, blank=False)
 	user_last_name = models.CharField(max_length=100, null=False, blank=False)
 	user_age = models.IntegerField(null=False, blank=False, default=0)
-
-
-
-class Player(models.Model):
+	username = models.CharField(max_length=100, null=False, blank=False)
+	user_email = models.EmailField(max_length=100, null=False, blank=False)
+	user_location = models.CharField(max_length=100, null=False, blank=False)
 	game = models.ForeignKey('Game', on_delete=models.PROTECT)
 
 
@@ -35,5 +34,8 @@ class AnswersSet(models.Model):
 	incorrect_answer3 = models.CharField(max_length=128, null=False, blank=False)
 
 
+class LeaderBoard(models.Model):
+	score = models.IntegerField(10, null=True, blank=True)
+	player_id = models.ForeignKey('User', on_delete=models.PROTECT, null=False, blank=False)
 
 
